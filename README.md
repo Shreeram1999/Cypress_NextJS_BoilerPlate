@@ -1,2 +1,3 @@
 # Cypress_NextJS_BoilerPlate
-A Boilerplate for cypress setup in NextJS Project
+A Boilerplate for Cypress setup in NextJS Project 
+
