@@ -1,0 +1,5 @@
+// .vscode/settings.json
+{
+    "typescript.tsserver.exclude": ["**/node_modules"]
+  }
+  
