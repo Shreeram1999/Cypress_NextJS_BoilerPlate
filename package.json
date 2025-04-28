@@ -10,10 +10,11 @@
     "nyc": "^17.1.0"
   },
   "scripts": {
-  "dev": "next dev",
+  "dev": "next dev -p 4200",
   "cypress:open": "cypress open",
   "cypress:e2e": "cypress run --e2e",
   "cypress:component": "cypress run --component",
-  "coverage:report": "nyc report --reporter=text --reporter=html"
+  "coverage:report": "nyc report --reporter=text --reporter=html",
+  "test:coverage": "cypress run --e2e && nyc report --reporter=text --reporter=html"
 }
 }

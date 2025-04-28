@@ -6,7 +6,7 @@ module.exports = defineConfig({
       require('@cypress/code-coverage/task')(on, config);
       return config;
     },
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:4200',
     supportFile: 'cypress/support/e2e.js',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
   },
