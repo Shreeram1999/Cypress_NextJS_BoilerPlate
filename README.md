@@ -17,7 +17,7 @@ This guide explains how to set up **Cypress** for **E2E** and **Component Testin
    npm install --save-dev cypress @cypress/code-coverage nyc istanbul-lib-coverage babel-plugin-istanbul
    ```
 
-3. **Install required Cypress dependencies:**
+3. **Install required Cypress dependencies for component testing:**
    ```bash
    npm install --save-dev @cypress/react @cypress/webpack-dev-server
    ```
@@ -32,7 +32,8 @@ Update scripts:
 ```json
 "scripts": {
   "dev": "next dev -p 4200",
-  "cypress:open": "cypress open",
+  "cypress:open:e2e": "cypress open --e2e",
+  "cypress:open:component": "cypress open --component",
   "coverage:report": "nyc report --reporter=text --reporter=html"
 }
 ```
@@ -105,7 +106,7 @@ import '@cypress/code-coverage/support';
 
 ---
 
-## 🌍 Example Pages for Testing
+## 🌍 Example Pages and Components for Testing
 
 ### pages/index.js
 ```jsx
@@ -150,6 +151,13 @@ export default function UserProfile() {
 }
 ```
 
+### components/Button.js
+```jsx
+export default function Button({ label, onClick }) {
+  return <button onClick={onClick}>{label}</button>;
+}
+```
+
 ---
 
 ## 🔢 Example E2E Test
@@ -166,6 +174,22 @@ describe('Home Page', () => {
 });
 ```
 
+## 🔢 Example Component Test
+
+### cypress/component/Button.cy.js
+```js
+import Button from '../../components/Button';
+
+describe('<Button />', () => {
+  it('renders and responds to click events', () => {
+    const onClick = cy.stub().as('onClickHandler');
+    cy.mount(<Button label="Click Me" onClick={onClick} />);
+    cy.get('button').click();
+    cy.get('@onClickHandler').should('have.been.calledOnce');
+  });
+});
+```
+
 ---
 
 ## ✨ Run and Generate Coverage Report
@@ -175,21 +199,25 @@ describe('Home Page', () => {
 npm run dev
 ```
 
-### 2. Open Cypress
+### 2. Open Cypress for E2E Testing
 ```bash
-npm run cypress:open
+npm run cypress:open:e2e
 ```
 
-### 3. Run Tests
+### 3. Open Cypress for Component Testing
+```bash
+npm run cypress:open:component
+```
 
+### 4. Run Tests
 Execute tests in Cypress UI or CLI.
 
-### 4. Generate Coverage Report
+### 5. Generate Coverage Report
 ```bash
 npm run coverage:report
 ```
 
-### 5. View Report
+### 6. View Report
 Open `coverage/index.html` in a browser.
 
 ---
@@ -198,6 +226,7 @@ Open `coverage/index.html` in a browser.
 - Always run tests before generating a report (to create `.nyc_output`)
 - Ignore warnings about deprecated packages unless critical
 - Use `data-cy` attributes in components for better test stability
+- Ensure `@cypress/code-coverage` is imported properly in both support files
 
 ---
 
